@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
     public GameObject camera2D; // 2D 카메라
     public GameObject camera3D; // 3D 카메라
 
@@ -11,7 +12,7 @@ public class PlayerController : MonoBehaviour
 
     private bool is2D = true; // 현재 시점이 2D인지 여부
     bool isGrounded = true;
-
+    bool isPaused = false;
     private Rigidbody rb3D;
 
     void Start()
@@ -35,6 +36,11 @@ public class PlayerController : MonoBehaviour
             rb3D.AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
             isGrounded = false;
         }
+        //esc가 눌렸을 때 시간이 멈추게 하기.
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            TogglePause();
+        }
     }
 
     private void FixedUpdate()
@@ -55,10 +61,26 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void OnCollisionEnter(Collision collision)
+    private void OnCollisionEnter(Collision collision)
     {
         // 바닥과 충돌 체크
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = true;
+    }
+
+    private void TogglePause()
+    {
+        isPaused = !isPaused;
+
+        if (isPaused)
+        {
+            // 시간을 멈추는 코드
+            Time.timeScale = 0f;
+        }
+        else
+        {
+            // 시간을 다시 움직이도록 설정하는 코드
+            Time.timeScale = 1f;
+        }
     }
 }
