@@ -28,8 +28,8 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.E))
         {
             is2D = !is2D;
-            camera2D.SetActive(is2D);
-            camera3D.SetActive(!is2D);
+            StartCoroutine(WaitAndExecute()); //1초 대기후 명령어 실행
+            
         }
         //점프 기능
         if(Input.GetButtonDown("Jump") && isGrounded){
@@ -41,6 +41,13 @@ public class PlayerController : MonoBehaviour
         {
             TogglePause();
         }
+    }
+    //1초 대기후 카메라 시점 변환 명령어를 실행하기 위해 삽입
+    IEnumerator WaitAndExecute()
+    {
+        yield return new WaitForSeconds(1f);
+        camera2D.SetActive(is2D);
+        camera3D.SetActive(!is2D);
     }
 
     private void FixedUpdate()
