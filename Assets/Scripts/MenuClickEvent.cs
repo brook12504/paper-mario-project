@@ -18,7 +18,7 @@ public class MenuClickEvent : MonoBehaviour
     }
 
     public void StartClickEvent() {
-        
+        SceneManager.LoadScene("GameStage");
     }
 
     public void QuitGame()
