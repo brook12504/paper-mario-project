@@ -3,22 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+//버튼 클릭 이벤트들
+
 public class MenuClickEvent : MonoBehaviour
 {
-    public void SettingClickEvent() {
-        SceneManager.LoadScene("Setting");
+    string previousScene = "GameTitle";
+
+
+
+    public void StartClickEvent() {
+        SceneManager.LoadScene("GameStage");
     }
 
     public void ScoreClickEvent() {
         SceneManager.LoadScene("ScoreView");
     }
 
-    public void BackToLobby() {
-        SceneManager.LoadScene("GameTitle");
-    }
-
-    public void StartClickEvent() {
-        SceneManager.LoadScene("GameStage");
+    public void SettingClickEvent() {
+        SavePreviousScene();
+        SceneManager.LoadScene("Setting");
     }
 
     public void QuitGame()
@@ -30,9 +33,21 @@ public class MenuClickEvent : MonoBehaviour
         #endif
     }
 
-    
+    public void BackToLobby() {
+        SceneManager.LoadScene("GameTitle");
+    }
 
-    
+    private void SavePreviousScene()
+    {
+        previousScene = SceneManager.GetActiveScene().name;
+    }
+
+    public void GoToPreviousScene()
+    {
+        SceneManager.LoadScene(previousScene);
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
