@@ -11,6 +11,11 @@ public class Heart : MonoBehaviour
     public Sprite fullHeart;
     public Sprite emptyHeart;
 
+    private void Start()
+    {
+        health = 3;
+    }
+
     void Update()
     {
         if(health > numOfHearts)
@@ -40,4 +45,5 @@ public class Heart : MonoBehaviour
             }
         }
     }
+
 }

@@ -14,13 +14,25 @@ public class PlayerController : MonoBehaviour
     bool isGrounded = true;
     bool isPaused = false;
     private Rigidbody rb3D;
+    private bool isInvincible = false;
+    public float invincibilityDuration = 2f; // 무적 지속 시간
+    private float invincibilityTimer = 0f; // 무적 타이머
+    private Heart heartScript;
+    public float blinkDuration = 2f; // 깜박임 지속 시간
+    public float blinkInterval = 0.2f; // 깜박임 간격
+
+    private Renderer renderer;
+    private bool isBlinking = false; // 깜박임 상태 여부
+    private float blinkTimer = 0f; // 깜박임 타이머
 
     void Start()
     {
+        heartScript = GetComponent<Heart>();
         rb3D = GetComponent<Rigidbody>();
 
         camera2D.SetActive(true);
         camera3D.SetActive(false);
+        renderer = GetComponent<Renderer>();
     }
 
     void Update(){
@@ -41,7 +53,38 @@ public class PlayerController : MonoBehaviour
         {
             TogglePause();
         }
+
+        // 무적 상태인 경우 타이머 감소
+        if (isInvincible)
+        {
+            invincibilityTimer -= Time.deltaTime;
+            if (invincibilityTimer <= 0f)
+            {
+                isInvincible = false;
+            }
+        }
+
+        if (isBlinking)
+        {
+            blinkTimer += Time.deltaTime;
+
+            if (blinkTimer >= blinkDuration)
+            {
+                StopBlinking();
+            }
+            else
+            {
+                // 깜박임 간격에 맞춰서 활성화/비활성화 상태를 변경하여 깜박임 효과를 나타냄
+                float remainder = blinkTimer % (2 * blinkInterval);
+                bool isVisible = remainder < blinkInterval;
+                renderer.enabled = isVisible;
+            }
+        }
+
+
     }
+
+   
     //1초 대기후 카메라 시점 변환 명령어를 실행하기 위해 삽입
     IEnumerator WaitAndExecute()
     {
@@ -73,6 +116,61 @@ public class PlayerController : MonoBehaviour
         // 바닥과 충돌 체크
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = true;
+
+        // 충돌한 객체가 "Mob" 태그를 가지고 있는 경우에만 처리
+        if (collision.gameObject.CompareTag("Mob"))
+        {
+            if (!isInvincible)
+            {
+                heartScript.health -= 1;
+                
+                if (heartScript.health <= 0)
+                {
+                    EndGame();
+                }
+                else
+                {
+                    StartInvincibility();
+                    StartBlinking();
+                }
+            }
+        }
+
+        // 바닥과 충돌 체크
+        if (collision.gameObject.CompareTag("FallDeadGround")){
+            heartScript.health = 0;
+            EndGame();
+        }
+            
+    }
+
+    private void StartInvincibility()
+    {
+        isInvincible = true;
+        invincibilityTimer = invincibilityDuration;
+        // 무적 상태에 대한 시각적인 처리 로직 추가 가능
+    }
+
+    private void EndGame()
+    {
+        // 게임 종료 로직 추가 가능
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
+
+    private void StartBlinking()
+    {
+        isBlinking = true;
+        blinkTimer = 0f;
+    }
+    
+    private void StopBlinking()
+    {
+        isBlinking = false;
+        renderer.enabled = true;
     }
 
     private void TogglePause()
