@@ -12,7 +12,7 @@ public class MenuClickEvent : MonoBehaviour
 
 
     public void StartClickEvent() {
-        SceneManager.LoadScene("GameStage");
+        SceneManager.LoadScene("ChapterScene");
     }
 
     public void ScoreClickEvent() {
@@ -47,6 +47,9 @@ public class MenuClickEvent : MonoBehaviour
         SceneManager.LoadScene(previousScene);
     }
 
+    public void chapter1Map1() {
+        SceneManager.LoadScene("GameStage");
+    }
 
     // Start is called before the first frame update
     void Start()

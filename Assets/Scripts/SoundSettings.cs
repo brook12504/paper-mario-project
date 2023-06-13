@@ -11,6 +11,12 @@ public class SoundSettings : MonoBehaviour
     public Slider bgmVolumeSlider;          // 배경음악 볼륨 슬라이더
     public Slider sfxVolumeSlider;          // 효과음 볼륨 슬라이더
 
+
+    private void Start()
+    {
+        masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChanged);
+    }
+
     public void OnMasterVolumeChanged(float value)
     {
         // 전체 볼륨 조절
