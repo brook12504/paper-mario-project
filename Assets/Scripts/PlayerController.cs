@@ -25,6 +25,9 @@ public class PlayerController : MonoBehaviour
     private bool isBlinking = false; // 깜박임 상태 여부
     private float blinkTimer = 0f; // 깜박임 타이머
 
+    private bool isEKeyPressed = false;
+    
+
     void Start()
     {
         heartScript = GetComponent<Heart>();
@@ -37,17 +40,25 @@ public class PlayerController : MonoBehaviour
 
     void Update(){
         // 시점 변환
-        if (Input.GetKeyDown(KeyCode.E))
+       
+        
+        if (Input.GetKeyDown(KeyCode.E) && !isEKeyPressed)
         {
-            is2D = !is2D;
+            isEKeyPressed = true;
             StartCoroutine(WaitAndExecute()); //1초 대기후 명령어 실행
             
         }
+        
+        
+        
+
+        
         //점프 기능
         if(Input.GetButtonDown("Jump") && isGrounded){
             rb3D.AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
             isGrounded = false;
         }
+        
         //esc가 눌렸을 때 시간이 멈추게 하기.
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -85,12 +96,18 @@ public class PlayerController : MonoBehaviour
     }
 
    
+    
     //1초 대기후 카메라 시점 변환 명령어를 실행하기 위해 삽입
     IEnumerator WaitAndExecute()
     {
+
         yield return new WaitForSeconds(1f);
+        is2D = !is2D;
         camera2D.SetActive(is2D);
         camera3D.SetActive(!is2D);
+        yield return new WaitForSeconds(1f);
+        isEKeyPressed = false;
+    
     }
 
     private void FixedUpdate()
@@ -98,7 +115,7 @@ public class PlayerController : MonoBehaviour
         // 이동
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-         if (is2D)
+        if (is2D)
         {
             Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb3D.velocity.y, 0f);
             rb3D.velocity = movement;
@@ -188,4 +205,5 @@ public class PlayerController : MonoBehaviour
             Time.timeScale = 1f;
         }
     }
+    
 }
