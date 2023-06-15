@@ -26,6 +26,10 @@ public class MenuClickEvent : MonoBehaviour
         SceneManager.LoadScene("Setting");
     }
 
+    public void Restart() {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
     public void SureQuit()
     {
         quitDialog.SetActive(true); // QuitDialog 오브젝트를 활성화하여 보여줌
