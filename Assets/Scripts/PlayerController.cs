@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    public Animator animator;
     public GameObject camera2D; // 2D 카메라
     public GameObject camera3D; // 3D 카메라
 
@@ -27,13 +28,10 @@ public class PlayerController : MonoBehaviour
 
     private bool isEKeyPressed = false;
     
-    // 다이얼로그 변수
-
-    public GameObject gameoverDialog;
-    public GameObject clearDialog;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         heartScript = GetComponent<Heart>();
         rb3D = GetComponent<Rigidbody>();
 
@@ -53,13 +51,10 @@ public class PlayerController : MonoBehaviour
             
         }
         
-        
-        
-
-        
         //점프 기능
         if(Input.GetButtonDown("Jump") && isGrounded){
             rb3D.AddForce(new Vector3(0, 10, 0), ForceMode.Impulse);
+            animator.Play("Jump", -1, 0);
             isGrounded = false;
         }
         
@@ -124,6 +119,8 @@ public class PlayerController : MonoBehaviour
         // 이동
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
+        animator.SetFloat("h", -moveHorizontal);
+        animator.SetFloat("v", moveVertical);
         if (is2D)
         {
             Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb3D.velocity.y, 0f);
@@ -152,7 +149,7 @@ public class PlayerController : MonoBehaviour
                 
                 if (heartScript.health <= 0)
                 {
-                    GameOver();
+                    EndGame();
                 }
                 else
                 {
@@ -165,7 +162,7 @@ public class PlayerController : MonoBehaviour
         // 바닥과 충돌 체크
         if (collision.gameObject.CompareTag("FallDeadGround")){
             heartScript.health = 0;
-            GameOver();
+            EndGame();
         }
             
     }
@@ -177,15 +174,14 @@ public class PlayerController : MonoBehaviour
         // 무적 상태에 대한 시각적인 처리 로직 추가 가능
     }
 
-    private void GameOver()
+    private void EndGame()
     {
-        gameoverDialog.SetActive(true);
-        renderer.enabled = false;
-    }
-
-    private void GameClear() 
-    {
-        clearDialog.SetActive(true);
+        // 게임 종료 로직 추가 가능
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 
     private void StartBlinking()
