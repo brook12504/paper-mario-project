@@ -27,6 +27,10 @@ public class PlayerController : MonoBehaviour
 
     private bool isEKeyPressed = false;
     
+    // 다이얼로그 변수
+
+    public GameObject gameoverDialog;
+    public GameObject clearDialog;
 
     void Start()
     {
@@ -148,7 +152,7 @@ public class PlayerController : MonoBehaviour
                 
                 if (heartScript.health <= 0)
                 {
-                    EndGame();
+                    GameOver();
                 }
                 else
                 {
@@ -161,7 +165,7 @@ public class PlayerController : MonoBehaviour
         // 바닥과 충돌 체크
         if (collision.gameObject.CompareTag("FallDeadGround")){
             heartScript.health = 0;
-            EndGame();
+            GameOver();
         }
             
     }
@@ -173,14 +177,15 @@ public class PlayerController : MonoBehaviour
         // 무적 상태에 대한 시각적인 처리 로직 추가 가능
     }
 
-    private void EndGame()
+    private void GameOver()
     {
-        // 게임 종료 로직 추가 가능
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
+        gameoverDialog.SetActive(true);
+        renderer.enabled = false;
+    }
+
+    private void GameClear() 
+    {
+        clearDialog.SetActive(true);
     }
 
     private void StartBlinking()
