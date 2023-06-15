@@ -60,7 +60,7 @@ public class MenuClickEvent : MonoBehaviour
     }
 
     public void chapter1Map1() {
-        SceneManager.LoadScene("Map");
+        SceneManager.LoadScene("map");
     }
 
     // Start is called before the first frame update
