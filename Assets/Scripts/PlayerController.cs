@@ -103,6 +103,11 @@ public class PlayerController : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
         is2D = !is2D;
+        if(is2D){
+            Vector3 currentPosition = transform.position;
+            currentPosition.z = -8f;
+            transform.position = currentPosition;
+        }
         camera2D.SetActive(is2D);
         camera3D.SetActive(!is2D);
         yield return new WaitForSeconds(1f);
