@@ -9,7 +9,9 @@ public class MenuClickEvent : MonoBehaviour
 {
     string previousScene = "GameTitle";
 
+    public GameObject quitDialog; // QuitDialog 오브젝트를 저장할 변수
 
+    
 
     public void StartClickEvent() {
         SceneManager.LoadScene("ChapterScene");
@@ -22,6 +24,16 @@ public class MenuClickEvent : MonoBehaviour
     public void SettingClickEvent() {
         SavePreviousScene();
         SceneManager.LoadScene("Setting");
+    }
+
+    public void SureQuit()
+    {
+        quitDialog.SetActive(true); // QuitDialog 오브젝트를 활성화하여 보여줌
+    }
+    
+    public void SureQuitClose()
+    {
+        quitDialog.SetActive(false); // QuitDialog 오브젝트를 활성화하여 보여줌
     }
 
     public void QuitGame()
