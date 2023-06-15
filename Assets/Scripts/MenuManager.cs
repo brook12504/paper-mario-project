@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 // 다이얼로그식 일시정지 메뉴 관련 클래스 
 
@@ -9,9 +10,13 @@ public class MenuManager : MonoBehaviour
 {
     public GameObject menuDialog; // 메뉴 다이얼로그를 담을 게임 오브젝트 변수
     public GameObject soundDialog;
+    public GameObject ClearDialog;
+    public GameObject GameOverDialog;
 
     private bool isMenuOpen = false; // 메뉴 다이얼로그가 열려있는지 여부를 저장하는 변수
     private bool isSoundOpen = false;
+    private bool isClearOpen = false;
+    private bool isGameOverOpen = false;
 
     private void Update()
     {
@@ -71,5 +76,29 @@ public class MenuManager : MonoBehaviour
 
         soundDialog.SetActive(false);
         isSoundOpen = false;
+    }
+
+    public void openClearDialog() 
+    {
+        ClearDialog.SetActive(true);
+        isClearOpen = true;
+    }
+
+    public void closeClearDialog() 
+    {
+        ClearDialog.SetActive(false);
+        isClearOpen = false;
+    }
+    
+    public void openGameOverDialog() 
+    {
+        GameOverDialog.SetActive(true);
+        isGameOverOpen = true;
+    }
+
+    public void closeGameOverDialog() 
+    {
+        GameOverDialog.SetActive(false);
+        isGameOverOpen = false;
     }
 }

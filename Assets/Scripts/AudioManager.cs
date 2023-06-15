@@ -16,9 +16,14 @@ public class AudioManager : MonoBehaviour
 
     public AudioMixer audioMixer;
 
-    private void Start()
+    private void Awake()
     {
+        masterVolumeSlider = GameObject.Find("MasterVolumeSlider").GetComponent<Slider>();
+        backgroundMusicSlider = GameObject.Find("BackgroundMusicSlider").GetComponent<Slider>();
+        effectSoundSlider = GameObject.Find("EffectSoundSlider").GetComponent<Slider>();
+
         LoadVolumeSettings(); // 설정값을 불러옴
+        
     }
 
     private void LoadVolumeSettings()

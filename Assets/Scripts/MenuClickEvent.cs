@@ -60,6 +60,10 @@ public class MenuClickEvent : MonoBehaviour
     }
 
     public void chapter1Map1() {
+        SceneManager.LoadScene("map");
+    }
+
+    public void chapter1Map10() {
         SceneManager.LoadScene("GameStage");
     }
 
