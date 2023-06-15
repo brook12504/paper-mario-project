@@ -278,6 +278,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PauseMenuEvent
       objectReference: {fileID: 0}
+    - target: {fileID: 1934942171303502781, guid: f9774e9e92a98bc498f55b4bf2697d3a, type: 3}
+      propertyPath: quitDialog
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8276838480167407684, guid: f9774e9e92a98bc498f55b4bf2697d3a, type: 3}
       propertyPath: menuDialog
       value: 

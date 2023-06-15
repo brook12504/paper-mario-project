@@ -105,7 +105,7 @@ public class PlayerController : MonoBehaviour
         is2D = !is2D;
         if(is2D){
             Vector3 currentPosition = transform.position;
-            currentPosition.z = -8f;
+            currentPosition.z = -0.5f;
             transform.position = currentPosition;
         }
         camera2D.SetActive(is2D);
