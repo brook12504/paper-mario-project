@@ -29,6 +29,9 @@ public class PlayerController : MonoBehaviour
     private bool isEKeyPressed = false;
     
 
+    // 스코어 관련 변수
+    private bool isGameClear = false;
+
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -164,6 +167,12 @@ public class PlayerController : MonoBehaviour
             heartScript.health = 0;
             EndGame();
         }
+
+        // 마지막 도착 지점과 충돌한 경우
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            GameClear();
+        }
             
     }
 
@@ -176,12 +185,24 @@ public class PlayerController : MonoBehaviour
 
     private void EndGame()
     {
+<<<<<<< HEAD
         // 게임 종료 로직 추가 가능
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
+=======
+        gameoverDialog.SetActive(true);
+        renderer.enabled = false;
+    }
+
+    private void GameClear() 
+    {
+        clearDialog.SetActive(true);
+        renderer.enabled = false;
+        isGameClear = true;
+>>>>>>> origin/AddCoin
     }
 
     private void StartBlinking()
