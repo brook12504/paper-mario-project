@@ -147,7 +147,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score : '
+  m_text: "Congratulation! \nYou clear this level!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b04a52cc3c98661439fb9afee7ea47f4, type: 2}
   m_sharedMaterial: {fileID: 5637079945531931246, guid: b04a52cc3c98661439fb9afee7ea47f4, type: 2}
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0

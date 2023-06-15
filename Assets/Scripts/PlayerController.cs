@@ -32,6 +32,9 @@ public class PlayerController : MonoBehaviour
     public GameObject gameoverDialog;
     public GameObject clearDialog;
 
+    // 스코어 관련 변수
+    private bool isGameClear = false;
+
     void Start()
     {
         heartScript = GetComponent<Heart>();
@@ -167,6 +170,12 @@ public class PlayerController : MonoBehaviour
             heartScript.health = 0;
             GameOver();
         }
+
+        // 마지막 도착 지점과 충돌한 경우
+        if (collision.gameObject.CompareTag("Finish"))
+        {
+            GameClear();
+        }
             
     }
 
@@ -186,6 +195,8 @@ public class PlayerController : MonoBehaviour
     private void GameClear() 
     {
         clearDialog.SetActive(true);
+        renderer.enabled = false;
+        isGameClear = true;
     }
 
     private void StartBlinking()
