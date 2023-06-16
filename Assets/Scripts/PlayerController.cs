@@ -157,7 +157,7 @@ public class PlayerController : MonoBehaviour
                 
                 if (heartScript.health <= 0)
                 {
-                    EndGame();
+                    GameOver();
                 }
                 else
                 {
@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour
         // 바닥과 충돌 체크
         if (collision.gameObject.CompareTag("FallDeadGround")){
             heartScript.health = 0;
-            EndGame();
+            GameOver();
         }
 
         // 마지막 도착 지점과 충돌한 경우
@@ -188,18 +188,13 @@ public class PlayerController : MonoBehaviour
         // 무적 상태에 대한 시각적인 처리 로직 추가 가능
     }
 
-    private void EndGame()
+    
+
+    private void GameOver()
     {
-        // 게임 종료 로직 추가 가능
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #else
-            Application.Quit();
-        #endif
         gameoverDialog.SetActive(true);
         renderer.enabled = false;
     }
-
     private void GameClear() 
     {
         clearDialog.SetActive(true);
