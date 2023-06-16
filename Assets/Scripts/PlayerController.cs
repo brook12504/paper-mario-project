@@ -8,9 +8,10 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
     public GameObject camera2D; // 2D 카메라
     public GameObject camera3D; // 3D 카메라
-
+    public GameObject clearDialog;
+    public GameObject gameoverDialog;
     public float moveSpeed = 5f; // 캐릭터 이동 속도
-
+    public int score;
     private bool is2D = true; // 현재 시점이 2D인지 여부
     bool isGrounded = true;
     bool isPaused = false;
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
     private Heart heartScript;
     public float blinkDuration = 2f; // 깜박임 지속 시간
     public float blinkInterval = 0.2f; // 깜박임 간격
-
+    
     private Renderer renderer;
     private bool isBlinking = false; // 깜박임 상태 여부
     private float blinkTimer = 0f; // 깜박임 타이머
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
+        score = 0;
         animator = GetComponent<Animator>();
         heartScript = GetComponent<Heart>();
         rb3D = GetComponent<Rigidbody>();
@@ -122,17 +124,17 @@ public class PlayerController : MonoBehaviour
         // 이동
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
-        animator.SetFloat("h", -moveHorizontal);
-        animator.SetFloat("v", moveVertical);
         if (is2D)
         {
             Vector3 movement = new Vector3(moveHorizontal * moveSpeed, rb3D.velocity.y, 0f);
             rb3D.velocity = movement;
+           
         }
         else
         {
             Vector3 movement = new Vector3(moveVertical * moveSpeed, rb3D.velocity.y, -moveHorizontal * moveSpeed);
             rb3D.velocity = movement;
+            
         }
 
     }
@@ -142,6 +144,9 @@ public class PlayerController : MonoBehaviour
         // 바닥과 충돌 체크
         if (collision.gameObject.CompareTag("Ground"))
             isGrounded = true;
+
+        if (collision.gameObject.CompareTag("Star"))
+            score += 1;
 
         // 충돌한 객체가 "Mob" 태그를 가지고 있는 경우에만 처리
         if (collision.gameObject.CompareTag("Mob"))
@@ -185,14 +190,12 @@ public class PlayerController : MonoBehaviour
 
     private void EndGame()
     {
-<<<<<<< HEAD
         // 게임 종료 로직 추가 가능
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
             Application.Quit();
         #endif
-=======
         gameoverDialog.SetActive(true);
         renderer.enabled = false;
     }
@@ -202,7 +205,7 @@ public class PlayerController : MonoBehaviour
         clearDialog.SetActive(true);
         renderer.enabled = false;
         isGameClear = true;
->>>>>>> origin/AddCoin
+
     }
 
     private void StartBlinking()
